@@ -4,3 +4,5 @@ crt:
 cel:
 	curl --cacert es01.crt -u elastic:123456 ${url}
 
+local:
+	curl -fsSL https://elastic.co/start-local | sh
