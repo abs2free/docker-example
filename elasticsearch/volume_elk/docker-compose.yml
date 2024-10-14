@@ -70,6 +70,7 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01:/usr/share/elasticsearch/data
+      - ./config/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml
     ports:
       - ${ES_PORT}:9200
     environment:
@@ -112,6 +113,7 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata02:/usr/share/elasticsearch/data
+      - ./config/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml
     environment:
       - node.name=es02
       - cluster.name=${CLUSTER_NAME}
@@ -151,6 +153,7 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata03:/usr/share/elasticsearch/data
+      - ./config/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml
     environment:
       - node.name=es03
       - cluster.name=${CLUSTER_NAME}
