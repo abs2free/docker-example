@@ -15,7 +15,7 @@ plugins:
 
   # Or by maven coordinates:
   - id: analysis-ik
-    location: http://get.infini.cloud/elasticsearch/analysis-ik/${STACK_VERSION}
+    location: http://get.infini.cloud/elasticsearch/analysis-ik/8.15.2
 
   # A proxy can also be configured per-plugin, if necessary
   #- id: example-with-proxy

@@ -70,6 +70,7 @@ services:
       #- esdata01:/usr/share/elasticsearch/data
       - ./volumes/elasticsearch-1/data:/usr/share/elasticsearch/data
       - ./volumes/elasticsearch-1/logs:/usr/share/elasticsearch/logs
+      - ./config/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml
     ports:
       - ${ES_PORT}:9200
     environment:
@@ -114,6 +115,7 @@ services:
       #- esdata02:/usr/share/elasticsearch/data
       - ./volumes/elasticsearch-2/data:/usr/share/elasticsearch/data
       - ./volumes/elasticsearch-2/logs:/usr/share/elasticsearch/logs
+      - ./config/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml
     environment:
       - node.name=es02
       - cluster.name=${CLUSTER_NAME}
@@ -155,6 +157,7 @@ services:
       #- esdata03:/usr/share/elasticsearch/data
       - ./volumes/elasticsearch-3/data:/usr/share/elasticsearch/data
       - ./volumes/elasticsearch-3/logs:/usr/share/elasticsearch/logs
+      - ./config/elasticsearch-plugins.yml:/usr/share/elasticsearch/config/elasticsearch-plugins.yml
     environment:
       - node.name=es03
       - cluster.name=${CLUSTER_NAME}
