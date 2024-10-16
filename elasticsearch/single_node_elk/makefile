@@ -37,5 +37,24 @@ kibana:
   docker.elastic.co/kibana/kibana:${STACK_VERSION}
 
 
+filebeat:
+	 docker run -d \
+  --name=filebeat \
+  --network elastic-net \
+  --user=root \
+  --volume="./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro" \
+  --volume="/var/lib/docker/containers:/var/lib/docker/containers:ro" \
+  --volume="/var/run/docker.sock:/var/run/docker.sock:ro" \
+  --volume="registry:/usr/share/filebeat/data:rw" \
+  docker.elastic.co/beats/filebeat:8.15.2 filebeat -e --strict.perms=false
 
 
+
+logstash:
+	docker run -d --name logstash \
+		-m 1000M --network elastic-net \
+		-p 5044:5044 -p 9600:9600 --privileged=true \
+		-e ES_JAVA_OPTS="-Duser.timezone=Asia/Shanghai" \
+		-v ./logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf \
+		-v ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml \
+		docker.elastic.co/logstash/logstash:8.15.2
