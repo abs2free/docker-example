@@ -55,6 +55,7 @@ logstash:
 		-m 1000M --network elastic-net \
 		-p 5044:5044 -p 9600:9600 --privileged=true \
 		-e ES_JAVA_OPTS="-Duser.timezone=Asia/Shanghai" \
-		-v ./logstash/config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf \
+		-v ./logs:/usr/share/logs \
+		-v ./logstash/pipeline:/usr/share/logstash/pipeline \
 		-v ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml \
 		docker.elastic.co/logstash/logstash:8.15.2
