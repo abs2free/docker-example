@@ -49,9 +49,9 @@ filebeat:
   docker.elastic.co/beats/filebeat:8.15.2 filebeat -e --strict.perms=false
 
 
-
-logstash:
-	docker run -d --name logstash \
+logst::
+	docker run -d \
+	   	--name logstash \
 		-m 1000M --network elastic-net \
 		-p 5044:5044 -p 9600:9600 --privileged=true \
 		-e ES_JAVA_OPTS="-Duser.timezone=Asia/Shanghai" \
