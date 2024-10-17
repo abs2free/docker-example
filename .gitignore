@@ -1,2 +1,4 @@
 elasticsearch/*/volumes/**
 *.crt
+
+**/.DS_Store

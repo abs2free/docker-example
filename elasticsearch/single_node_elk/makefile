@@ -59,11 +59,3 @@ logst::
 		-v ./logstash/pipeline:/usr/share/logstash/pipeline \
 		-v ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml \
 		docker.elastic.co/logstash/logstash:8.15.2
-
-filebeat01:
-	docker run -d --name filebeat --network elastic-net \
-docker.elastic.co/beats/filebeat:8.15.2 \
-setup -E setup.kibana.host=kibana:5601 \
--E output.elasticsearch.hosts=["elasticsearch:9200"] \
--E output.elasticsearch.username="elastic" \
--E output.elasticsearch.password=${ELASTIC_PASSWORD}
