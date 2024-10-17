@@ -1,0 +1,3 @@
+[submodule "elasticsearch/elk-on-docker"]
+	path = elasticsearch/elk-on-docker
+	url = git@github.com:ayounes9/elk-on-docker.git
