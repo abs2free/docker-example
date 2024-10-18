@@ -1,0 +1,4 @@
+- module: elasticsearch
+  xpack.enabled: false
+  period: 10s
+  hosts: ["http://elasticsearch:9200"]

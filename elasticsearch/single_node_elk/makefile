@@ -26,7 +26,7 @@ prekb:
   -d '{"password":"'"${KIBANA_PASSWORD}"'"}' \
   -H 'Content-Type: application/json'
 
-kibana:
+kibana: prekb
 	docker run -p 127.0.0.1:5601:5601 -d --name kibana --network elastic-net \
   -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
   -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 \
@@ -35,6 +35,20 @@ kibana:
   -e "xpack.security.enabled=false" \
   -e "xpack.license.self_generated.type=trial" \
   docker.elastic.co/kibana/kibana:${STACK_VERSION}
+
+
+metricbeat:
+	docker run -d \
+	  --name=metricbeat \
+	--network elastic-net \
+	  --user=root \
+	  --volume="./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro" \
+	  --volume="/var/run/docker.sock:/var/run/docker.sock:ro" \
+	  --volume="/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro" \
+	  --volume="/proc:/hostfs/proc:ro" \
+	  --volume="/:/hostfs:ro" \
+	  --volume="./elasticsearch-xpack.yml:/usr/share/metricbeat/modules.d/elasticsearch-xpack.yml" \
+     docker.elastic.co/beats/metricbeat:8.15.2
 
 
 filebeat:
@@ -51,23 +65,10 @@ filebeat:
 
 logst::
 	docker run -d \
-  		--network elastic-net \
-	   	--name logstash \
-		-m 1000M --network elastic-net \
-		-p 5044:5044/udp -p 9600:9600 --privileged=true \
-		-e ES_JAVA_OPTS="-Duser.timezone=Asia/Shanghai" \
-		-v ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf \
-		-v ./logstash.yml:/usr/share/logstash/config/logstash.yml \
-		docker.elastic.co/logstash/logstash:8.15.2
-
-metricbeat:
-	docker run -d \
-	  --name=metricbeat \
-  	  --network elastic-net \
-	  --user=root \
-	  --volume="./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro" \
-	  --volume="/var/run/docker.sock:/var/run/docker.sock:ro" \
-	  --volume="/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro" \
-	  --volume="/proc:/hostfs/proc:ro" \
-	  --volume="/:/hostfs:ro" \
-	  docker.elastic.co/beats/metricbeat:8.15.2
+	--name logstash \
+	-m 1000M --network elastic-net \
+	-p 5044:5044/udp -p 9600:9600 --privileged=true \
+	-e ES_JAVA_OPTS="-Duser.timezone=Asia/Shanghai" \
+	-v ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf \
+	-v ./logstash.yml:/usr/share/logstash/config/logstash.yml \
+	docker.elastic.co/logstash/logstash:8.15.2
