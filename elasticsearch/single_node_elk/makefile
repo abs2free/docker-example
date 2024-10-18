@@ -51,6 +51,7 @@ filebeat:
 
 logst::
 	docker run -d \
+  		--network elastic-net \
 	   	--name logstash \
 		-m 1000M --network elastic-net \
 		-p 5044:5044/udp -p 9600:9600 --privileged=true \
@@ -58,3 +59,15 @@ logst::
 		-v ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf \
 		-v ./logstash.yml:/usr/share/logstash/config/logstash.yml \
 		docker.elastic.co/logstash/logstash:8.15.2
+
+metricbeat:
+	docker run -d \
+	  --name=metricbeat \
+  	  --network elastic-net \
+	  --user=root \
+	  --volume="./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml:ro" \
+	  --volume="/var/run/docker.sock:/var/run/docker.sock:ro" \
+	  --volume="/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro" \
+	  --volume="/proc:/hostfs/proc:ro" \
+	  --volume="/:/hostfs:ro" \
+	  docker.elastic.co/beats/metricbeat:8.15.2
