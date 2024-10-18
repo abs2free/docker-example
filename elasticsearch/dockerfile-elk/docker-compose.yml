@@ -245,8 +245,9 @@ services:
     volumes:
       - logstashdata01:/usr/share/logstash/data
       - certs:/usr/share/logstash/certs
-      - ./logstash.yml:/usr/share/logstash/config/logstash.yml
+      #- ./logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+
     environment:
       - NODE_NAME="logstash"
       - xpack.monitoring.enabled=false
@@ -282,7 +283,19 @@ services:
     command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
     #profiles:
       #- monitoring
-
+      #
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    volumes:
+      - ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml
+      - /var/log:/usr/share/filebeat/logs #挂载日志目录
+      - /var/run/docker.sock:/var/run/docker.sock  # 挂载 Docker socket
+    command: ["-c", "/usr/share/filebeat/filebeat.yml", "-e"]
+    depends_on:
+      es01:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
 
 
 volumes:
