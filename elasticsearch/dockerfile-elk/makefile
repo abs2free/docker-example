@@ -3,6 +3,12 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
+ca:
+	 docker cp dockerfile-elk-es01-1:/usr/share/elasticsearch/config/certs/ca/ca.crt http_ca.crt
+
+test:
+	curl --cacert http_ca.crt -u "elastic:123456"  -X GET "https://localhost:9200/_cat/nodes?v&pretty"
+
 
 env:
 	export ES_URL="https://localhost:9200"
