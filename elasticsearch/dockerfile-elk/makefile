@@ -17,3 +17,15 @@ build:
 
 compose:
 	docker compose --file docker-compose.yml up -d
+
+basicup:
+	docker compose --profile basic  up -d
+
+moniup:
+	docker compose --profile monitoring  up -d
+
+basicdown:
+	docker compose --profile basic  down
+
+monidown:
+	docker compose --profile monitoring  down

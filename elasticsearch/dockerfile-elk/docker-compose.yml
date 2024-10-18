@@ -59,8 +59,8 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
-    #profiles:
-      #- basic
+    profiles:
+      - basic
 
   es01:
     depends_on:
@@ -106,8 +106,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
-    #profiles:
-      #- basic
+    profiles:
+      - basic
 
   es02:
     depends_on:
@@ -150,8 +150,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
-    #profiles:
-      #- basic
+    profiles:
+      - basic
 
   es03:
     depends_on:
@@ -194,8 +194,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
-    #profiles:
-      #- basic
+    profiles:
+      - basic
 
   kibana:
     depends_on:
@@ -229,15 +229,10 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
-    #profiles:
-      #- basic
+    profiles:
+      - basic
 
   logstash:
-    depends_on:
-      es01:
-        condition: service_healthy
-      kibana:
-        condition: service_healthy
     image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
     labels:
       co.elastic.logs/module: logstash
@@ -258,8 +253,8 @@ services:
     ports:
       - "5044:5044/udp"
     mem_limit: ${LOGSTASH_MEM_LIMIT}
-    #profiles:
-      #- monitoring
+    profiles:
+      - monitoring
 
 
   metricbeat:
@@ -281,9 +276,9 @@ services:
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=certs/ca/ca.crt
     # disable strict permission checks
     command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
-    #profiles:
-      #- monitoring
-      #
+    profiles:
+      - monitoring
+
   filebeat:
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
     volumes:
@@ -291,11 +286,9 @@ services:
       - /var/log:/usr/share/filebeat/logs #挂载日志目录
       - /var/run/docker.sock:/var/run/docker.sock  # 挂载 Docker socket
     command: ["-c", "/usr/share/filebeat/filebeat.yml", "-e"]
-    depends_on:
-      es01:
-        condition: service_healthy
-      kibana:
-        condition: service_healthy
+    profiles:
+      - monitoring
+
 
 
 volumes:
