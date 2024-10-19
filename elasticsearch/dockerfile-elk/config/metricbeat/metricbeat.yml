@@ -43,8 +43,8 @@ metricbeat.modules:
     period: 10s
     hosts: ["logstash:9600"]
   - module: kibana
-    hosts: [ http://kibana:5601 ]
-    username: "kibana_system"
+    hosts: [ "http://kibana:5601" ]
+    username: "elastic"
     password: "123456"
     xpack.enabled: true
     period: 10s
@@ -56,21 +56,24 @@ processors:
   - add_cloud_metadata: ~
 
 
-output.logstash:
-  hosts: ["logstash:5044"]
-  loadbalance: true
-  index: metricbeat
+#output.logstash:
+  #hosts: ["logstash:5044"]
+  #loadbalance: true
+  #index: metricbeat
 
 
+# check config
+#./metricbeat test config
+#./metricbeat test output
 
-
-  #ou#tput.elasticsearch:
-  #hosts: ["https://es01:9200"] ## Monitoring cluster
-  #protocol: "https"
-  #username: "elastic"
-  #password: "123456"
+output.elasticsearch:
+  hosts: ["https://es01:9200"] ## Monitoring cluster
+  protocol: "https"
+  username: "elastic"
+  password: "123456"
   #ssl:
-  #enabled: true
-  #ca_trusted_fingerprint: "2E2183D75B89EB9D5EFFF8B40F158CA2267C9ED978849AE924A0C6DD8A05C8C5"
-  #ssl.enabled: true
-  #ssl.certificate_authorities: ["certs/ca/ca.crt"]
+    #enabled: true
+    #ca_trusted_fingerprint: "2E2183D75B89EB9D5EFFF8B40F158CA2267C9ED978849AE924A0C6DD8A05C8C5"
+  ssl:
+    nabled: true
+    certificate_authorities: ["certs/ca/ca.crt"]
