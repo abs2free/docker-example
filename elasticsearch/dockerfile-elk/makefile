@@ -27,6 +27,11 @@ build:
 compose:
 	docker compose --file docker-compose.yml up -d
 
+
+up: upbasic upmonitor
+
+down: downbasic downmomitor
+
 upbasic:
 	docker compose --profile basic  up -d
 
