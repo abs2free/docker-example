@@ -24,14 +24,14 @@ build:
 compose:
 	docker compose --file docker-compose.yml up -d
 
-basicup:
+upbasic:
 	docker compose --profile basic  up -d
 
-moniup:
+upmt:
 	docker compose --profile monitoring  up -d
 
-basicdown:
+downbasic:
 	docker compose --profile basic  down
 
-monidown:
+downmt:
 	docker compose --profile monitoring  down
