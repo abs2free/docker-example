@@ -256,6 +256,7 @@ services:
     command: logstash -f /usr/share/logstash/pipeline/logstash.conf
     ports:
       - 5044:5044
+      - 9600:9600
       - 5000:5000/tcp
       - 5000:5000/udp
     mem_limit: ${LOGSTASH_MEM_LIMIT}
@@ -275,6 +276,7 @@ services:
       - ./config/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
       - ./config/metricbeat/elasticsearch-xpack.yml:/usr/share/metricbeat/modules.d/elasticsearch-xpack.yml
       - ./config/metricbeat/kibana-xpack.yml:/usr/share/metricbeat/modules.d/kibana-xpack.yml
+      - ./config/metricbeat/logstash-xpack.yml:/usr/share/metricbeat/modules.d/logstash-xpack.yml
     environment:
       - ELASTICSEARCH_HOST=https://es01:9200
       - KIBANA_HOST=https://kibana:5601
