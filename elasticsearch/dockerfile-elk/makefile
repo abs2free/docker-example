@@ -6,6 +6,9 @@ endif
 ca:
 	 docker cp dockerfile-elk-es01-1:/usr/share/elasticsearch/config/certs/ca/ca.crt http_ca.crt
 
+footprint: ca
+	openssl x509 -fingerprint -sha256 -noout -in ./http_ca.crt | awk --field-separator="=" '{print $2}' | sed 's/://g'
+
 test:
 	curl --cacert http_ca.crt -u "elastic:123456"  -X GET "https://localhost:9200/_cat/nodes?v&pretty"
 

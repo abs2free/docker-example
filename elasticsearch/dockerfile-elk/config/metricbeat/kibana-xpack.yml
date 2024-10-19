@@ -6,4 +6,4 @@
   #basepath: ""
   #username: "user"
   #password: "secret"
-  xpack.enabled: true
+  #xpack.enabled: true
