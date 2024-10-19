@@ -30,11 +30,11 @@ compose:
 upbasic:
 	docker compose --profile basic  up -d
 
-upmt:
+upmonitor:
 	docker compose --profile monitoring  up -d
 
 downbasic:
 	docker compose --profile basic  down
 
-downmt:
+downmomitor:
 	docker compose --profile monitoring  down
