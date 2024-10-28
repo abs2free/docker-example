@@ -288,15 +288,15 @@ services:
     profiles:
       - monitoring
 
-  #filebeat:
-    #image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
-    #volumes:
-      #- ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml
-      #- /var/log:/usr/share/filebeat/logs #挂载日志目录
-      #- /var/run/docker.sock:/var/run/docker.sock  # 挂载 Docker socket
-    #command: ["-c", "/usr/share/filebeat/filebeat.yml", "-e"]
-    #profiles:
-      #- monitoring
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    volumes:
+      - ./config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./nginx/logs:/usr/share/filebeat/logs #挂载日志目录
+      - /var/run/docker.sock:/var/run/docker.sock  # 挂载 Docker socket
+    command: ["-c", "/usr/share/filebeat/filebeat.yml", "-e"]
+    profiles:
+      - monitoring
 
 volumes:
   certs:
