@@ -46,3 +46,6 @@ downmomitor:
 
 ng:
 	docker compose --file nginx/docker-compose.yml up -d
+
+downng:
+	docker compose --file nginx/docker-compose.yml down
